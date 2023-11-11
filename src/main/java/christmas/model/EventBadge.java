@@ -4,7 +4,7 @@ public enum EventBadge {
     NONE(0),
     STAR(5000),
     TREE(10000),
-    SANTA(20000)
+    SANTA(20000);
 
     private final int threshold;
 
