@@ -1,2 +1,8 @@
-package christmas.model;public class MenuCategory {
+package christmas.model;
+
+public enum MenuCategory {
+    APPETIZER,
+    MAIN,
+    DESSERT,
+    BEVERAGE
 }
