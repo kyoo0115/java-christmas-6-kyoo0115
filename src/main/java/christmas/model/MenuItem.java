@@ -1,25 +1,23 @@
 package christmas.model;
 
-public class MenuItem {
-    private final String name;
-    private final int price;
-    private final MenuCategory category;
+import java.util.Objects;
 
-    public MenuItem(String name, int price, MenuCategory category) {
-        this.name = name;
-        this.price = price;
-        this.category = category;
+public record MenuItem(String name, int price, MenuCategory category) {
+    public MenuItem {
+        validate(name, price, category);
     }
 
-    public boolean isCategory(MenuCategory otherCategory) {
-        return this.category == otherCategory;
+    private void validate(String name, int price, MenuCategory category) {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Item name cannot be null or empty.");
+        }
+        if (price < 0) {
+            throw new IllegalArgumentException("Item price cannot be negative.");
+        }
+        Objects.requireNonNull(category, "Item category cannot be null.");
     }
 
-    public String displayInfo() {
-        return String.format("%s - %d원, %s", name, price, category);
-    }
-
-    public int calculateDiscountedPrice(int discountAmount) {
-        return price - discountAmount;
+    public String getName() {
+        return name;
     }
 }
