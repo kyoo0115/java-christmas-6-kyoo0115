@@ -1,7 +1,10 @@
-package christmas.model;
+package christmas.model.entity;
 
-import christmas.model.entity.MenuItem;
+import christmas.discount.DiscountManager;
+import christmas.model.MenuCategory;
 import christmas.model.service.GiftService;
+import christmas.model.service.PricingService;
+import christmas.utils.Util;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.HashMap;
@@ -9,8 +12,10 @@ import java.util.HashMap;
 public class Order {
     private final LinkedHashMap<MenuItem, Integer> items;
     private boolean isEligibleForGift;
-    private long totalDiscount;
     private final Map<String, Long> discountDetails = new HashMap<>();
+    private final PricingService pricingService = new PricingService();
+    private final DiscountManager discountManager = new DiscountManager();
+
 
     public Order() {
         this.items = new LinkedHashMap<>();
@@ -20,15 +25,16 @@ public class Order {
         items.merge(item, quantity, Integer::sum);
     }
 
+    public void updateGiftEligibility(boolean eligibility) {
+        this.isEligibleForGift = eligibility;
+    }
+
     public long calculateTotalPrice() {
-        return items.entrySet().stream()
-                .mapToLong(entry -> (long) entry.getKey().price() * entry.getValue())
-                .sum();
+        return pricingService.calculateTotalPrice(this.items);
     }
 
     public void addDiscountDetail(String detail, long amount) {
         discountDetails.put(detail, amount);
-        totalDiscount += amount;
     }
 
     public boolean isEligibleForGift() {
@@ -36,21 +42,15 @@ public class Order {
     }
 
     public long getTotalDiscount() {
-        return totalDiscount;
+        return discountManager.getTotalDiscount();
     }
 
     public int getDessertCount() {
-        return this.getItems().entrySet().stream()
-                .filter(entry -> entry.getKey().category() == MenuCategory.DESSERT)
-                .mapToInt(Map.Entry::getValue)
-                .sum();
+        return Util.countItemsByCategory(this.items, MenuCategory.DESSERT);
     }
 
     public int getMainCount() {
-        return this.getItems().entrySet().stream()
-                .filter(entry -> entry.getKey().category() == MenuCategory.MAIN)
-                .mapToInt(Map.Entry::getValue)
-                .sum();
+        return Util.countItemsByCategory(this.items, MenuCategory.MAIN);
     }
 
     public long calculateDiscountedTotalPrice() {
@@ -60,11 +60,7 @@ public class Order {
     }
 
     public Map<String, Long> getDiscountDetails() {
-        return discountDetails;
-    }
-
-    public void setGiftEligibility(boolean isEligibleForGift) {
-        this.isEligibleForGift = isEligibleForGift;
+        return discountManager.getDiscountDetails();
     }
 
     public long calculateTotalBenefitAmount() {
