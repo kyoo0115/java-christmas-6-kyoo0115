@@ -1,11 +1,9 @@
-package christmas.model;
+package christmas.discount;
 
-import christmas.utils.DiscountCalculator;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.EnumSet;
-import java.util.Map;
 
 public class DiscountPolicy {
     private static final int CHRISTMAS_DISCOUNT_START = 1000;
@@ -20,14 +18,24 @@ public class DiscountPolicy {
     private static final EnumSet<DayOfWeek> WEEKENDS = EnumSet.of(DayOfWeek.FRIDAY, DayOfWeek.SATURDAY);
 
     public long calculateChristmasDiscount(LocalDate date) {
-        return DiscountCalculator.calculateChristmasDiscount(date, CHRISTMAS_DISCOUNT_BEGIN, CHRISTMAS_DISCOUNT_END, CHRISTMAS_DISCOUNT_START, CHRISTMAS_DISCOUNT_INCREMENT);
+        if (date.isBefore(CHRISTMAS_DISCOUNT_BEGIN) || date.isAfter(CHRISTMAS_DISCOUNT_END)) {
+            return 0;
+        }
+        long daysBetween = ChronoUnit.DAYS.between(CHRISTMAS_DISCOUNT_BEGIN, date);
+        return CHRISTMAS_DISCOUNT_START + daysBetween * CHRISTMAS_DISCOUNT_INCREMENT;
     }
 
     public long calculateWeekdayDessertDiscount(int dessertCount, LocalDate date) {
-        return DiscountCalculator.calculateWeekdayDessertDiscount(dessertCount, date, WEEKDAY_DESSERT_DISCOUNT, WEEKDAYS);
+        if (WEEKDAYS.contains(date.getDayOfWeek())) {
+            return (long) dessertCount * WEEKDAY_DESSERT_DISCOUNT;
+        }
+        return 0;
     }
 
     public long calculateWeekendMainDiscount(int mainCount, LocalDate date) {
-        return DiscountCalculator.calculateWeekendMainDiscount(mainCount, date, WEEKEND_MAIN_DISCOUNT, WEEKENDS);
+        if (WEEKENDS.contains(date.getDayOfWeek())) {
+            return (long) mainCount * WEEKEND_MAIN_DISCOUNT;
+        }
+        return 0;
     }
 }
