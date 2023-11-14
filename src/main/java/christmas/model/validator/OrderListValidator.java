@@ -53,7 +53,7 @@ public class OrderListValidator implements Validator<String> {
         try {
             return Integer.parseInt(quantityStr);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("[ERROR] 메뉴의 개수는 숫자만 입력되도록 해주세요. 다시 입력해 주세요.");
+            throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
         }
     }
 
