@@ -1,7 +1,7 @@
 package christmas.utils;
 
 import christmas.model.MenuCategory;
-import christmas.model.MenuItem;
+import christmas.model.entity.MenuItem;
 
 import java.util.HashSet;
 import java.util.Set;
