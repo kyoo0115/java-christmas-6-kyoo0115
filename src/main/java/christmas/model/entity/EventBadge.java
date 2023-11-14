@@ -1,4 +1,4 @@
-package christmas.model;
+package christmas.model.entity;
 
 public enum EventBadge {
     없음(0),
