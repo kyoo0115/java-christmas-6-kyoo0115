@@ -1,8 +1,9 @@
-package christmas.model.service.strategy;
+package christmas.discount.strategy;
 
-import static christmas.model.DiscountPolicy.SPECIAL_DISCOUNT;
+import static christmas.discount.DiscountPolicy.SPECIAL_DISCOUNT;
 
-import christmas.model.DiscountPolicy;
+import christmas.discount.DiscountPolicy;
+import christmas.discount.strategy.DiscountStrategy;
 import christmas.model.EventDateManager;
 import christmas.model.entity.Order;
 import java.time.LocalDate;

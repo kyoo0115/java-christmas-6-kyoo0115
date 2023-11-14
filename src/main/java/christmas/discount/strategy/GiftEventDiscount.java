@@ -1,6 +1,6 @@
-package christmas.model.service.strategy;
+package christmas.discount.strategy;
 
-import christmas.model.DiscountPolicy;
+import christmas.discount.DiscountPolicy;
 import christmas.model.EventDateManager;
 import christmas.model.entity.Order;
 import christmas.model.service.GiftService;
