@@ -1,9 +1,10 @@
-package christmas.utils;
+package christmas.discount;
 
 import christmas.discount.DiscountPolicy;
 import christmas.discount.DiscountType;
 import christmas.model.EventDateManager;
 import christmas.model.entity.Order;
+import christmas.utils.Constants;
 import java.time.LocalDate;
 
 public class DiscountCalculator {
