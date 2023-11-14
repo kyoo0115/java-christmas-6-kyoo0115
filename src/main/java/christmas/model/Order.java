@@ -1,19 +1,19 @@
 package christmas.model;
 
+import christmas.model.service.GiftService;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Optional;
 
 public class Order {
-    private final Map<MenuItem, Integer> items;
+    private final LinkedHashMap<MenuItem, Integer> items;
     private boolean isEligibleForGift;
     private long totalDiscount;
-    private long giftValue = 0;
     private final Map<String, Long> discountDetails = new HashMap<>();
 
     public Order() {
-        this.items = new HashMap<>();
+        this.items = new LinkedHashMap<>();
     }
 
     public void addItem(MenuItem item, int quantity) {
@@ -28,6 +28,7 @@ public class Order {
 
     public void addDiscountDetail(String detail, long amount) {
         discountDetails.put(detail, amount);
+        totalDiscount += amount;
     }
 
     public boolean isEligibleForGift() {
@@ -52,34 +53,31 @@ public class Order {
                 .sum();
     }
 
-    public void checkAndSetGiftEligibility(long totalPrice) {
-        this.isEligibleForGift = totalPrice >= 120_000;
-        if (isEligibleForGift) {
-            this.giftValue = 25_000;
-        }
-    }
-
     public long calculateDiscountedTotalPrice() {
-        return calculateTotalPrice() - totalDiscount;
+        long totalPriceBeforeDiscounts = calculateTotalPriceBeforeDiscounts();
+        long discountsExcludingGift = getTotalDiscount() - (isEligibleForGift() ? GiftService.GIFT_VALUE : 0);
+        return totalPriceBeforeDiscounts - discountsExcludingGift;
     }
 
     public Map<String, Long> getDiscountDetails() {
         return discountDetails;
     }
-    public Map<MenuItem, Integer> getItems() {
-        return new HashMap<>(items);
-    }
 
-    public void setTotalDiscount(long totalDiscount) {
-        this.totalDiscount = totalDiscount;
+    public void setGiftEligibility(boolean isEligibleForGift) {
+        this.isEligibleForGift = isEligibleForGift;
     }
 
     public long calculateTotalBenefitAmount() {
-        return getTotalDiscount() + giftValue;
+        return getTotalDiscount();
     }
 
-    public EventBadge calculateBadge() {
-        long totalBenefitAmount = calculateTotalBenefitAmount();
-        return EventBadge.getBadgeForAmount(totalBenefitAmount);
+    public long calculateTotalPriceBeforeDiscounts() {
+        return items.entrySet().stream()
+                .mapToLong(entry -> (long) entry.getKey().price() * entry.getValue())
+                .sum();
+    }
+
+    public Map<MenuItem, Integer> getItems() {
+        return new LinkedHashMap<>(items);
     }
 }
