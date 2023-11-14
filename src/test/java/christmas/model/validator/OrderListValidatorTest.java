@@ -13,7 +13,6 @@ class OrderListValidatorTest {
 
     @BeforeEach
     void setUp() {
-        // Initialize with a sample menu for testing purposes
         Set<String> sampleMenuItems = Set.of("해산물파스타", "레드와인", "초코케이크", "타파스", "제로콜라");
         orderListValidator = new OrderListValidator(sampleMenuItems);
     }
@@ -64,6 +63,4 @@ class OrderListValidatorTest {
         });
         assertTrue(exception.getMessage().contains("[ERROR] 메뉴의 개수는 1 이상이어야 합니다."));
     }
-
-    // Add more tests for other validation rules as necessary...
 }
