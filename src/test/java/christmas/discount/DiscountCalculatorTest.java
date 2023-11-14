@@ -1,9 +1,9 @@
-package christmas;
+package christmas.discount;
 
 import christmas.discount.DiscountPolicy;
 import christmas.model.EventDateManager;
 import christmas.model.entity.Order;
-import christmas.utils.DiscountCalculator;
+import christmas.discount.DiscountCalculator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;

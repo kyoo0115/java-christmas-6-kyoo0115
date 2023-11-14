@@ -1,4 +1,4 @@
-package christmas;
+package christmas.discount;
 
 import christmas.discount.DiscountPolicy;
 import christmas.discount.DiscountType;

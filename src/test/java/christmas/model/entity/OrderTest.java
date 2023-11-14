@@ -1,4 +1,4 @@
-package christmas;
+package christmas.model.entity;
 
 import christmas.model.MenuCategory;
 import christmas.model.entity.MenuItem;

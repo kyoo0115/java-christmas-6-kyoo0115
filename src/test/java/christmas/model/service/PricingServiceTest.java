@@ -1,4 +1,4 @@
-package christmas;
+package christmas.model.service;
 
 import christmas.model.entity.MenuItem;
 import christmas.model.service.PricingService;

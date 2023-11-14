@@ -1,4 +1,4 @@
-package christmas;
+package christmas.model.service;
 
 import christmas.model.entity.Order;
 import christmas.model.service.GiftService;

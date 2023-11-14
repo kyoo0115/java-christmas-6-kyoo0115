@@ -1,4 +1,4 @@
-package christmas;
+package christmas.model.validator;
 
 import christmas.model.validator.DateValidator;
 import org.junit.jupiter.api.BeforeEach;
