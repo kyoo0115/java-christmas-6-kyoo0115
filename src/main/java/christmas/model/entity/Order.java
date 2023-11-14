@@ -1,10 +1,10 @@
 package christmas.model;
 
+import christmas.model.entity.MenuItem;
 import christmas.model.service.GiftService;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Optional;
 
 public class Order {
     private final LinkedHashMap<MenuItem, Integer> items;

@@ -2,7 +2,7 @@ package christmas.model.service.strategy;
 
 import christmas.model.DiscountPolicy;
 import christmas.model.EventDateManager;
-import christmas.model.Order;
+import christmas.model.entity.Order;
 import christmas.model.service.GiftService;
 import java.time.LocalDate;
 

@@ -1,5 +1,6 @@
 package christmas.model;
 
+import christmas.model.entity.Order;
 import christmas.model.service.strategy.ChristmasDDayDiscount;
 import christmas.model.service.strategy.DiscountStrategy;
 import christmas.model.service.strategy.GiftEventDiscount;
