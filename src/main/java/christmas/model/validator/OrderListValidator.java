@@ -2,6 +2,7 @@ package christmas.model.validator;
 
 import christmas.utils.Constants;
 
+import christmas.view.ExceptionView;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -40,7 +41,7 @@ public class OrderListValidator implements Validator<String> {
 
     private void validateOrderFormat(String order) {
         if (order.split(Constants.ITEM_QUANTITY_DELIMITER).length != 2) {
-            throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+            throw new IllegalArgumentException(ExceptionView.INVALID_ORDER_FORMAT.getMessage());
         }
     }
 
@@ -53,22 +54,22 @@ public class OrderListValidator implements Validator<String> {
         try {
             return Integer.parseInt(quantityStr);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+            throw new IllegalArgumentException(ExceptionView.INVALID_ORDER_FORMAT.getMessage());
         }
     }
 
     private void validateMenuItem(String item, Set<String> checkedItems) {
         if (!menuItems.contains(item)) {
-            throw new IllegalArgumentException("[ERROR] 메뉴판에 없는 메뉴를 입력하셨습니다. 다시 입력해 주세요.");
+            throw new IllegalArgumentException(ExceptionView.INVALID_MENU_ITEM.getMessage());
         }
         if (checkedItems.contains(item)) {
-            throw new IllegalArgumentException("[ERROR] 중복 메뉴를 입력하셨습니다. 다시 입력해 주세요.");
+            throw new IllegalArgumentException(ExceptionView.DUPLICATE_MENU_ITEM.getMessage());
         }
     }
 
     private void validateQuantity(int quantity) {
         if (quantity < 1) {
-            throw new IllegalArgumentException("[ERROR] 메뉴의 개수는 1 이상이어야 합니다. 다시 입력해 주세요.");
+            throw new IllegalArgumentException(ExceptionView.INVALID_QUANTITY.getMessage());
         }
     }
 }
