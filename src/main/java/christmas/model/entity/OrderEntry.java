@@ -1,3 +1,5 @@
-package christmas.utils;
+package christmas.model.entity;
 
-public class OrderEntry {}
+public record OrderEntry(String itemName, int quantity) {
+
+}
