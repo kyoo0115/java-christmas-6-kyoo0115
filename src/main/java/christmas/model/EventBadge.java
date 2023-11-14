@@ -1,31 +1,24 @@
 package christmas.model;
 
 public enum EventBadge {
-    NONE(0),
-    STAR(5000),
-    TREE(10000),
-    SANTA(20000);
+    없음(0),
+    별(5000),
+    트리(10000),
+    산타(20000);
 
-    private final int threshold;
+    private final long threshold;
 
-    EventBadge(int threshold) {
+    EventBadge(long threshold) {
         this.threshold = threshold;
     }
 
-    public static EventBadge getBadgeForAmount(long discountAmount) {
-        if (discountAmount >= SANTA.threshold) {
-            return SANTA;
+    public static EventBadge getBadgeForAmount(long totalBenefitAmount) {
+        EventBadge badgeEarned = 없음;
+        for (EventBadge badge : EventBadge.values()) {
+            if (totalBenefitAmount >= badge.threshold) {
+                badgeEarned = badge;
+            }
         }
-        if (discountAmount >= TREE.threshold) {
-            return TREE;
-        }
-        if (discountAmount >= STAR.threshold) {
-            return STAR;
-        }
-        return NONE;
-    }
-
-    public int getThreshold() {
-        return threshold;
+        return badgeEarned;
     }
 }
