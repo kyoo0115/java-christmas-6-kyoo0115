@@ -1,7 +1,7 @@
 package christmas.view;
 
-import christmas.model.EventBadge;
-import christmas.model.Order;
+import christmas.model.entity.EventBadge;
+import christmas.model.entity.Order;
 import christmas.model.service.GiftService;
 import java.util.Map;
 import java.util.Optional;
@@ -61,9 +61,10 @@ public class OutputView {
         System.out.println("<증정 메뉴>");
         if (giftItem.isPresent()) {
             System.out.println(giftItem.get() + " 1개");
-        } else {
-            System.out.println("없음");
+            System.out.println();
+            return;
         }
+        System.out.println("없음");
         System.out.println();
     }
 }
