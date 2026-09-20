@@ -4,6 +4,7 @@ import christmas.discount.DiscountPolicy;
 import christmas.model.EventDateManager;
 import christmas.model.entity.Order;
 import christmas.model.service.GiftService;
+
 import java.time.LocalDate;
 
 public class GiftEventDiscount implements DiscountStrategy {

@@ -6,9 +6,9 @@ import java.util.Optional;
 
 public class GiftService {
 
-    public static final long   GIFT_ELIGIBILITY_THRESHOLD = 120_000;
-    public static final long   GIFT_VALUE                 = 25_000;
-    public static final String GIFT_ITEM                  = "샴페인";
+    public static final long GIFT_ELIGIBILITY_THRESHOLD = 120_000;
+    public static final long GIFT_VALUE = 25_000;
+    public static final String GIFT_ITEM = "샴페인";
 
     public void processGiftEligibility(Order order) {
         boolean eligible = order.calculateTotalPrice() >= GIFT_ELIGIBILITY_THRESHOLD;

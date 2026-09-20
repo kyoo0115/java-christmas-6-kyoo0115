@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class OrderService {
 
-    private static final String ORDER_DELIMITER         = ",";
+    private static final String ORDER_DELIMITER = ",";
     private static final String ITEM_QUANTITY_DELIMITER = "-";
 
     private final Map<String, MenuItem> menuItemMap;

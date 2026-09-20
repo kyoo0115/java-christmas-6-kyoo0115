@@ -1,14 +1,16 @@
 package christmas.model.service;
 
 import christmas.model.entity.MenuItem;
-import christmas.model.service.PricingService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
 import java.util.HashMap;
 import java.util.Map;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class PricingServiceTest {
 

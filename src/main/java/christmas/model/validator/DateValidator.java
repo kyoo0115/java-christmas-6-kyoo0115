@@ -5,7 +5,7 @@ import christmas.model.exception.ErrorMessage;
 public class DateValidator implements Validator<Integer> {
 
     private static final int START_OF_DECEMBER = 1;
-    private static final int END_OF_DECEMBER   = 31;
+    private static final int END_OF_DECEMBER = 31;
 
     @Override
     public Integer validate(String input) {

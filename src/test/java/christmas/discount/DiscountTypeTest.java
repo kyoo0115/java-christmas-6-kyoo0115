@@ -1,15 +1,15 @@
 package christmas.discount;
 
-import christmas.discount.DiscountPolicy;
-import christmas.discount.DiscountType;
 import christmas.model.EventDateManager;
 import christmas.model.entity.Order;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
 import java.time.LocalDate;
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.mock;
 
 class DiscountTypeTest {
 

@@ -1,12 +1,7 @@
 package christmas.model.discount;
 
 import christmas.model.EventDateManager;
-import christmas.model.discount.strategy.ChristmasDDayDiscount;
-import christmas.model.discount.strategy.DiscountStrategy;
-import christmas.model.discount.strategy.GiftEventDiscount;
-import christmas.model.discount.strategy.SpecialDiscount;
-import christmas.model.discount.strategy.WeekdayDiscount;
-import christmas.model.discount.strategy.WeekendDiscount;
+import christmas.model.discount.strategy.*;
 import christmas.model.entity.Order;
 
 import java.time.LocalDate;
@@ -25,14 +20,16 @@ public enum DiscountType {
         this.displayName = displayName;
     }
 
-    /** Factory: build a DiscountCalculator with all strategies wired up. */
+    /**
+     * Factory: build a DiscountCalculator with all strategies wired up.
+     */
     public static DiscountCalculator createCalculator(DiscountPolicy policy, EventDateManager eventDateManager) {
         java.util.Map<DiscountType, DiscountStrategy> strategies = new java.util.EnumMap<>(DiscountType.class);
-        strategies.put(CHRISTMAS_D_DAY,    new ChristmasDDayDiscount(policy));
-        strategies.put(WEEKDAY_DISCOUNT,   new WeekdayDiscount(policy));
-        strategies.put(WEEKEND_DISCOUNT,   new WeekendDiscount(policy));
-        strategies.put(SPECIAL_DISCOUNT,   new SpecialDiscount(eventDateManager));
-        strategies.put(GIFT_EVENT,         new GiftEventDiscount());
+        strategies.put(CHRISTMAS_D_DAY, new ChristmasDDayDiscount(policy));
+        strategies.put(WEEKDAY_DISCOUNT, new WeekdayDiscount(policy));
+        strategies.put(WEEKEND_DISCOUNT, new WeekendDiscount(policy));
+        strategies.put(SPECIAL_DISCOUNT, new SpecialDiscount(eventDateManager));
+        strategies.put(GIFT_EVENT, new GiftEventDiscount());
         return new DiscountCalculator(strategies);
     }
 

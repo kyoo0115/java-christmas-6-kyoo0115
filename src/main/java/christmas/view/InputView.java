@@ -4,6 +4,16 @@ import camp.nextstep.edu.missionutils.Console;
 
 public class InputView {
 
+    public static String readVisitDate() {
+        Prompt.VISIT_DATE.display();
+        return Console.readLine();
+    }
+
+    public static String readOrderList() {
+        Prompt.ORDER_LIST.display();
+        return Console.readLine();
+    }
+
     public enum Prompt {
         WELCOME_MESSAGE("안녕하세요! 우테코 식당 12월 이벤트 플래너입니다."),
         VISIT_DATE("12월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)"),
@@ -18,15 +28,5 @@ public class InputView {
         public void display() {
             System.out.println(message);
         }
-    }
-
-    public static String readVisitDate() {
-        Prompt.VISIT_DATE.display();
-        return Console.readLine();
-    }
-
-    public static String readOrderList() {
-        Prompt.ORDER_LIST.display();
-        return Console.readLine();
     }
 }

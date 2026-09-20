@@ -3,13 +3,17 @@ package christmas.utils;
 import christmas.model.MenuCategory;
 import christmas.model.entity.MenuItem;
 import christmas.model.entity.OrderEntry;
-import christmas.utils.Util;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
-import java.util.*;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class UtilTest {
 

@@ -7,18 +7,16 @@ import java.util.EnumSet;
 
 public class DiscountPolicy {
 
+    public static final long SPECIAL_DISCOUNT = 1_000;
     private static final long CHRISTMAS_DISCOUNT_START = 1_000;
     private static final long CHRISTMAS_DISCOUNT_INCREMENT = 100;
     private static final LocalDate CHRISTMAS_PERIOD_START = LocalDate.of(2023, 12, 1);
-    private static final LocalDate CHRISTMAS_PERIOD_END   = LocalDate.of(2023, 12, 25);
-
+    private static final LocalDate CHRISTMAS_PERIOD_END = LocalDate.of(2023, 12, 25);
     private static final long WEEKDAY_DESSERT_DISCOUNT = 2_023;
-    private static final long WEEKEND_MAIN_DISCOUNT    = 2_023;
-    public  static final long SPECIAL_DISCOUNT         = 1_000;
-
+    private static final long WEEKEND_MAIN_DISCOUNT = 2_023;
     private static final EnumSet<DayOfWeek> WEEKDAYS =
             EnumSet.of(DayOfWeek.SUNDAY, DayOfWeek.MONDAY, DayOfWeek.TUESDAY,
-                       DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY);
+                    DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY);
     private static final EnumSet<DayOfWeek> WEEKENDS =
             EnumSet.of(DayOfWeek.FRIDAY, DayOfWeek.SATURDAY);
 

@@ -4,15 +4,14 @@ import christmas.model.MenuCategory;
 import christmas.model.service.GiftService;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Order {
 
     private final LinkedHashMap<MenuItem, Integer> items = new LinkedHashMap<>();
-    private boolean eligibleForGift;
     private final Map<String, Long> discountDetails = new LinkedHashMap<>();
+    private boolean eligibleForGift;
 
     public void addItem(MenuItem item, int quantity) {
         items.merge(item, quantity, Integer::sum);
@@ -34,12 +33,16 @@ public class Order {
         return Collections.unmodifiableMap(discountDetails);
     }
 
-    /** Total discount including gift value (used for badge calculation and benefit display). */
+    /**
+     * Total discount including gift value (used for badge calculation and benefit display).
+     */
     public long calculateTotalBenefitAmount() {
         return discountDetails.values().stream().mapToLong(Long::longValue).sum();
     }
 
-    /** Pre-discount total (sum of item prices × quantities). */
+    /**
+     * Pre-discount total (sum of item prices × quantities).
+     */
     public long calculateTotalPrice() {
         return items.entrySet().stream()
                 .mapToLong(e -> (long) e.getKey().price() * e.getValue())

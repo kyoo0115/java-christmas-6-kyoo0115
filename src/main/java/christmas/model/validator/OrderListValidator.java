@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class OrderListValidator implements Validator<String> {
 
-    private static final String ORDER_DELIMITER         = ",";
+    private static final String ORDER_DELIMITER = ",";
     private static final String ITEM_QUANTITY_DELIMITER = "-";
 
     private final Set<String> validMenuNames;
@@ -32,8 +32,8 @@ public class OrderListValidator implements Validator<String> {
             throw new IllegalArgumentException(ErrorMessage.INVALID_ORDER_FORMAT.getMessage());
         }
 
-        String item     = parts[0].trim();
-        int    quantity = parseQuantity(parts[1].trim());
+        String item = parts[0].trim();
+        int quantity = parseQuantity(parts[1].trim());
 
         if (!validMenuNames.contains(item)) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_MENU_ITEM.getMessage());

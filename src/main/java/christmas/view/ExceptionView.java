@@ -8,6 +8,7 @@ public enum ExceptionView {
     DUPLICATE_MENU_ITEM("[ERROR] 중복 메뉴를 입력하셨습니다. 다시 입력해 주세요.");
 
     private final String message;
+
     ExceptionView(String message) {
         this.message = message;
     }

@@ -1,13 +1,9 @@
 package christmas.discount;
 
+import christmas.discount.strategy.*;
 import christmas.model.EventDateManager;
 import christmas.model.entity.Order;
-import christmas.discount.strategy.ChristmasDDayDiscount;
-import christmas.discount.strategy.DiscountStrategy;
-import christmas.discount.strategy.GiftEventDiscount;
-import christmas.discount.strategy.SpecialDiscount;
-import christmas.discount.strategy.WeekdayDiscount;
-import christmas.discount.strategy.WeekendDiscount;
+
 import java.time.LocalDate;
 
 public enum DiscountType {

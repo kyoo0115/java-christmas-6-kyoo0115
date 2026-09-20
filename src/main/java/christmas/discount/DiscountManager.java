@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DiscountManager {
-    private long totalDiscount;
     private final Map<String, Long> discountDetails = new HashMap<>();
+    private long totalDiscount;
 
     public long getTotalDiscount() {
         return totalDiscount;
