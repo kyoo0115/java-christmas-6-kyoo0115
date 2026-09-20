@@ -19,7 +19,8 @@ public class OutputView {
     }
 
     public void displayBenefitsPreview(int date) {
-        System.out.printf("12월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!%n%n", date);
+        System.out.printf("12월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!%n", date);
+        System.out.println();
     }
 
     public void displayOrderItems(Order order) {
@@ -47,10 +48,11 @@ public class OutputView {
         Map<String, Long> details = order.getDiscountDetails();
         if (details.isEmpty()) {
             System.out.println("없음");
-        } else {
-            details.forEach((label, amount) ->
-                    System.out.printf("%s: -%,d원%n", label, amount));
+            System.out.println();
+            return;
         }
+        details.forEach((label, amount) ->
+                System.out.printf("%s: -%,d원%n", label, amount));
         System.out.println();
     }
 
@@ -58,9 +60,9 @@ public class OutputView {
         long total = order.calculateTotalBenefitAmount();
         if (total <= 0) {
             System.out.printf("<총혜택 금액>%n0원%n%n");
-        } else {
-            System.out.printf("<총혜택 금액>%n-%,d원%n%n", total);
+            return;
         }
+        System.out.printf("<총혜택 금액>%n-%,d원%n%n", total);
     }
 
     public void displayTotalPriceAfterDiscount(long discountedPrice) {

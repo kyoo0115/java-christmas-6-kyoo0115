@@ -25,27 +25,19 @@ class DateValidatorTest {
     @Test
     @DisplayName("유효하지 않은 날짜 형식은 예외를 발생시켜야 함")
     void whenInvalidDateFormat_thenException() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            dateValidator.validate("invalid");
-        });
+        assertThrows(IllegalArgumentException.class, () -> dateValidator.validate("invalid"));
     }
 
     @Test
     @DisplayName("범위를 벗어난 날짜는 예외를 발생시켜야 함")
     void whenDateOutOfRange_thenException() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            dateValidator.validate("32");
-        });
-        assertThrows(IllegalArgumentException.class, () -> {
-            dateValidator.validate("0");
-        });
+        assertThrows(IllegalArgumentException.class, () -> dateValidator.validate("32"));
+        assertThrows(IllegalArgumentException.class, () -> dateValidator.validate("0"));
     }
 
     @Test
     @DisplayName("음수 날짜는 예외를 발생시켜야 함")
     void whenNegativeDate_thenException() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            dateValidator.validate("-1");
-        });
+        assertThrows(IllegalArgumentException.class, () -> dateValidator.validate("-1"));
     }
 }

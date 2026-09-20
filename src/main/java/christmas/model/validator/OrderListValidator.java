@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class OrderListValidator implements Validator<String> {
 
-    private static final String ORDER_DELIMITER = ",";
+    private static final String ORDER_DELIMITER         = ",";
     private static final String ITEM_QUANTITY_DELIMITER = "-";
 
     private final Set<String> validMenuNames;
@@ -29,20 +29,20 @@ public class OrderListValidator implements Validator<String> {
     private void validateSingleOrder(String order, Set<String> seen) {
         String[] parts = order.split(ITEM_QUANTITY_DELIMITER);
         if (parts.length != 2) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_ORDER_FORMAT.getMessage());
+            throw new IllegalArgumentException(ErrorMessage.INVALID_ORDER.getMessage());
         }
 
-        String item = parts[0].trim();
-        int quantity = parseQuantity(parts[1].trim());
+        String item     = parts[0].trim();
+        int    quantity = parseQuantity(parts[1].trim());
 
         if (!validMenuNames.contains(item)) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_MENU_ITEM.getMessage());
+            throw new IllegalArgumentException(ErrorMessage.INVALID_ORDER.getMessage());
         }
         if (seen.contains(item)) {
-            throw new IllegalArgumentException(ErrorMessage.DUPLICATE_MENU_ITEM.getMessage());
+            throw new IllegalArgumentException(ErrorMessage.INVALID_ORDER.getMessage());
         }
         if (quantity < 1) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_QUANTITY.getMessage());
+            throw new IllegalArgumentException(ErrorMessage.INVALID_ORDER.getMessage());
         }
         seen.add(item);
     }
@@ -51,7 +51,7 @@ public class OrderListValidator implements Validator<String> {
         try {
             return Integer.parseInt(value);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_ORDER_FORMAT.getMessage());
+            throw new IllegalArgumentException(ErrorMessage.INVALID_ORDER.getMessage());
         }
     }
 }

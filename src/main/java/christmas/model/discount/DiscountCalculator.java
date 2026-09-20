@@ -8,6 +8,8 @@ import java.util.Map;
 
 public class DiscountCalculator {
 
+    private static final long MIN_ORDER_AMOUNT_FOR_EVENT = 10_000;
+
     private final Map<DiscountType, DiscountStrategy> strategies;
 
     DiscountCalculator(Map<DiscountType, DiscountStrategy> strategies) {
@@ -15,6 +17,9 @@ public class DiscountCalculator {
     }
 
     public Order calculateDiscounts(Order order, LocalDate visitDate) {
+        if (order.calculateTotalPrice() < MIN_ORDER_AMOUNT_FOR_EVENT) {
+            return order;
+        }
         for (DiscountType type : DiscountType.values()) {
             DiscountStrategy strategy = strategies.get(type);
             long amount = strategy.calculateDiscount(order, visitDate);

@@ -6,62 +6,57 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class OrderListValidatorTest {
+
+    private static final String INVALID_ORDER_MSG = "[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.";
 
     private OrderListValidator orderListValidator;
 
     @BeforeEach
     void setUp() {
-        Set<String> sampleMenuItems = Set.of("해산물파스타", "레드와인", "초코케이크", "타파스", "제로콜라");
-        orderListValidator = new OrderListValidator(sampleMenuItems);
+        orderListValidator = new OrderListValidator(
+                Set.of("해산물파스타", "레드와인", "초코케이크", "타파스", "제로콜라"));
     }
 
     @Test
-    @DisplayName("Valid order should pass validation")
+    @DisplayName("유효한 주문은 검증을 통과해야 함")
     void whenValidOrderInput_thenSuccess() {
-        String input = "해산물파스타-2,레드와인-1";
-        assertDoesNotThrow(() -> orderListValidator.validate(input));
+        assertDoesNotThrow(() -> orderListValidator.validate("해산물파스타-2,레드와인-1"));
     }
 
     @Test
-    @DisplayName("Invalid order format should throw exception")
+    @DisplayName("형식이 잘못된 주문은 예외를 발생시켜야 함")
     void whenInvalidOrderFormat_thenException() {
-        String input = "해산물파스타/2";
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            orderListValidator.validate(input);
-        });
-        assertTrue(exception.getMessage().contains("[ERROR] 유효하지 않은 주문입니다."));
+        Exception e = assertThrows(IllegalArgumentException.class,
+                () -> orderListValidator.validate("해산물파스타/2"));
+        assertTrue(e.getMessage().contains("[ERROR] 유효하지 않은 주문입니다."));
     }
 
     @Test
-    @DisplayName("Order with non-existing menu item should throw exception")
+    @DisplayName("메뉴판에 없는 메뉴는 예외를 발생시켜야 함")
     void whenOrderWithNonExistingMenuItem_thenException() {
-        String input = "해산물파스타-2,없는메뉴-1";
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            orderListValidator.validate(input);
-        });
-        assertTrue(exception.getMessage().contains("[ERROR] 메뉴판에 없는 메뉴를 입력하셨습니다."));
+        Exception e = assertThrows(IllegalArgumentException.class,
+                () -> orderListValidator.validate("해산물파스타-2,없는메뉴-1"));
+        assertTrue(e.getMessage().contains("[ERROR] 유효하지 않은 주문입니다."));
     }
 
     @Test
-    @DisplayName("Order with duplicate menu items should throw exception")
+    @DisplayName("중복 메뉴는 예외를 발생시켜야 함")
     void whenOrderWithDuplicateItems_thenException() {
-        String input = "타파스-1,타파스-1";
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            orderListValidator.validate(input);
-        });
-        assertTrue(exception.getMessage().contains("[ERROR] 중복 메뉴를 입력하셨습니다."));
+        Exception e = assertThrows(IllegalArgumentException.class,
+                () -> orderListValidator.validate("타파스-1,타파스-1"));
+        assertTrue(e.getMessage().contains("[ERROR] 유효하지 않은 주문입니다."));
     }
 
     @Test
-    @DisplayName("Order with invalid quantity should throw exception")
+    @DisplayName("수량이 1 미만인 주문은 예외를 발생시켜야 함")
     void whenOrderWithInvalidQuantity_thenException() {
-        String input = "해산물파스타-0,레드와인-1";
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            orderListValidator.validate(input);
-        });
-        assertTrue(exception.getMessage().contains("[ERROR] 메뉴의 개수는 1 이상이어야 합니다."));
+        Exception e = assertThrows(IllegalArgumentException.class,
+                () -> orderListValidator.validate("해산물파스타-0,레드와인-1"));
+        assertTrue(e.getMessage().contains("[ERROR] 유효하지 않은 주문입니다."));
     }
 }

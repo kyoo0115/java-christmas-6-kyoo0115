@@ -5,6 +5,7 @@ import christmas.model.discount.DiscountCalculator;
 import christmas.model.discount.DiscountPolicy;
 import christmas.model.discount.DiscountType;
 import christmas.model.entity.EventBadge;
+import christmas.model.entity.MenuItem;
 import christmas.model.entity.Order;
 import christmas.model.service.BadgeService;
 import christmas.model.service.GiftService;
@@ -29,7 +30,7 @@ public class EventPlannerController {
     public EventPlannerController() {
         var menuItems = MenuLoader.loadMenuItems();
         var menuNames = menuItems.stream()
-                .map(item -> item.name())
+                .map(MenuItem::name)
                 .collect(Collectors.toSet());
         var policy = new DiscountPolicy();
         var dateManager = new EventDateManager();
@@ -46,9 +47,9 @@ public class EventPlannerController {
         InputView.Prompt.WELCOME_MESSAGE.display();
 
         int dayOfMonth = inputController.readAndValidateVisitDate();
-        outputView.displayBenefitsPreview(dayOfMonth);
 
         String rawOrder = inputController.readAndValidateOrderList();
+        outputView.displayBenefitsPreview(dayOfMonth);
         Order order = orderService.createOrderFromInput(rawOrder);
 
         // Gift eligibility must be set before discount calculation
