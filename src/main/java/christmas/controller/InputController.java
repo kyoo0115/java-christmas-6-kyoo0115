@@ -3,6 +3,7 @@ package christmas.controller;
 import christmas.model.validator.DateValidator;
 import christmas.model.validator.OrderListValidator;
 import christmas.view.InputView;
+import christmas.view.OutputView;
 
 import java.util.Set;
 
@@ -10,18 +11,20 @@ public class InputController {
 
     private final DateValidator dateValidator;
     private final OrderListValidator orderListValidator;
+    private final OutputView outputView;
 
-    public InputController(Set<String> validMenuItems) {
+    public InputController(Set<String> validMenuNames, OutputView outputView) {
         this.dateValidator = new DateValidator();
-        this.orderListValidator = new OrderListValidator(validMenuItems);
+        this.orderListValidator = new OrderListValidator(validMenuNames);
+        this.outputView = outputView;
     }
+
     public int readAndValidateVisitDate() {
         while (true) {
             try {
-                String inputDate = InputView.readVisitDate();
-                return dateValidator.validate(inputDate);
+                return dateValidator.validate(InputView.readVisitDate());
             } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
+                outputView.displayError(e.getMessage());
             }
         }
     }
@@ -29,10 +32,9 @@ public class InputController {
     public String readAndValidateOrderList() {
         while (true) {
             try {
-                String inputOrderList = InputView.readOrderList();
-                return orderListValidator.validate(inputOrderList);
+                return orderListValidator.validate(InputView.readOrderList());
             } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
+                outputView.displayError(e.getMessage());
             }
         }
     }

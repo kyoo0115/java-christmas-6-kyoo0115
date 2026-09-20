@@ -1,75 +1,57 @@
 package christmas.model.validator;
 
-import christmas.utils.Constants;
+import christmas.model.exception.ErrorMessage;
 
-import christmas.view.ExceptionView;
 import java.util.HashSet;
 import java.util.Set;
 
 public class OrderListValidator implements Validator<String> {
 
-    private final Set<String> menuItems;
+    private static final String ORDER_DELIMITER         = ",";
+    private static final String ITEM_QUANTITY_DELIMITER = "-";
 
-    public OrderListValidator(Set<String> menuItems) {
-        this.menuItems = menuItems;
+    private final Set<String> validMenuNames;
+
+    public OrderListValidator(Set<String> validMenuNames) {
+        this.validMenuNames = validMenuNames;
     }
 
     @Override
     public String validate(String input) {
-        String[] orders = input.split(Constants.ORDER_DELIMITER);
-        validateOrders(orders);
+        String[] orders = input.split(ORDER_DELIMITER);
+        Set<String> seen = new HashSet<>();
+        for (String order : orders) {
+            validateSingleOrder(order.trim(), seen);
+        }
         return input;
     }
 
-    private void validateOrders(String[] orders) {
-        Set<String> checkedItems = new HashSet<>();
-        for (String order : orders) {
-            processOrder(order, checkedItems);
+    private void validateSingleOrder(String order, Set<String> seen) {
+        String[] parts = order.split(ITEM_QUANTITY_DELIMITER);
+        if (parts.length != 2) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_ORDER_FORMAT.getMessage());
         }
-    }
 
-    private void processOrder(String order, Set<String> checkedItems) {
-        validateOrderFormat(order);
-        String item = getItem(order);
-        int quantity = getQuantity(order);
+        String item     = parts[0].trim();
+        int    quantity = parseQuantity(parts[1].trim());
 
-        validateMenuItem(item, checkedItems);
-        validateQuantity(quantity);
-
-        checkedItems.add(item);
-    }
-
-    private void validateOrderFormat(String order) {
-        if (order.split(Constants.ITEM_QUANTITY_DELIMITER).length != 2) {
-            throw new IllegalArgumentException(ExceptionView.INVALID_ORDER_FORMAT.getMessage());
+        if (!validMenuNames.contains(item)) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_MENU_ITEM.getMessage());
         }
-    }
-
-    private String getItem(String order) {
-        return order.split(Constants.ITEM_QUANTITY_DELIMITER)[0].trim();
-    }
-
-    private int getQuantity(String order) {
-        String quantityStr = order.split(Constants.ITEM_QUANTITY_DELIMITER)[1].trim();
-        try {
-            return Integer.parseInt(quantityStr);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(ExceptionView.INVALID_ORDER_FORMAT.getMessage());
+        if (seen.contains(item)) {
+            throw new IllegalArgumentException(ErrorMessage.DUPLICATE_MENU_ITEM.getMessage());
         }
-    }
-
-    private void validateMenuItem(String item, Set<String> checkedItems) {
-        if (!menuItems.contains(item)) {
-            throw new IllegalArgumentException(ExceptionView.INVALID_MENU_ITEM.getMessage());
-        }
-        if (checkedItems.contains(item)) {
-            throw new IllegalArgumentException(ExceptionView.DUPLICATE_MENU_ITEM.getMessage());
-        }
-    }
-
-    private void validateQuantity(int quantity) {
         if (quantity < 1) {
-            throw new IllegalArgumentException(ExceptionView.INVALID_QUANTITY.getMessage());
+            throw new IllegalArgumentException(ErrorMessage.INVALID_QUANTITY.getMessage());
+        }
+        seen.add(item);
+    }
+
+    private int parseQuantity(String value) {
+        try {
+            return Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_ORDER_FORMAT.getMessage());
         }
     }
 }

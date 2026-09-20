@@ -1,27 +1,35 @@
 package christmas.model;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.HashSet;
+import java.time.Month;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class EventDateManager {
-    private final Set<LocalDate> specialOfferDates;
 
-    public EventDateManager() {
-        this.specialOfferDates = new HashSet<>();
-        initializeSpecialOfferDates();
-    }
+    private static final int EVENT_YEAR = 2023;
+    private static final Month EVENT_MONTH = Month.DECEMBER;
 
-    private void initializeSpecialOfferDates() {
-        specialOfferDates.add(LocalDate.of(2023, 12, 3));
-        specialOfferDates.add(LocalDate.of(2023, 12, 10));
-        specialOfferDates.add(LocalDate.of(2023, 12, 17));
-        specialOfferDates.add(LocalDate.of(2023, 12, 24));
-        specialOfferDates.add(LocalDate.of(2023, 12, 25));
-        specialOfferDates.add(LocalDate.of(2023, 12, 31));
+    // All Sundays in December 2023, plus Christmas Eve and New Year's Eve
+    private static final Set<LocalDate> SPECIAL_OFFER_DATES = computeSpecialOfferDates();
+
+    private static Set<LocalDate> computeSpecialOfferDates() {
+        LocalDate firstSunday = LocalDate.of(EVENT_YEAR, EVENT_MONTH, 1)
+                .with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
+
+        Set<LocalDate> sundays = IntStream.iterate(firstSunday.getDayOfMonth(), d -> d <= 31, d -> d + 7)
+                .mapToObj(d -> LocalDate.of(EVENT_YEAR, EVENT_MONTH, d))
+                .collect(Collectors.toSet());
+
+        sundays.add(LocalDate.of(EVENT_YEAR, EVENT_MONTH, 25)); // Christmas
+        sundays.add(LocalDate.of(EVENT_YEAR, EVENT_MONTH, 31)); // New Year's Eve
+        return Set.copyOf(sundays);
     }
 
     public boolean isSpecialOfferDate(LocalDate date) {
-        return specialOfferDates.contains(date);
+        return SPECIAL_OFFER_DATES.contains(date);
     }
 }

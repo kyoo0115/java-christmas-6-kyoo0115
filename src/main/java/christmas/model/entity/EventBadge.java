@@ -1,24 +1,31 @@
 package christmas.model.entity;
 
-public enum EventBadge {
-    없음(0),
-    별(5000),
-    트리(10000),
-    산타(20000);
+import java.util.Arrays;
+import java.util.Comparator;
 
+public enum EventBadge {
+    NONE("없음", 0),
+    STAR("별", 5_000),
+    TREE("트리", 10_000),
+    SANTA("산타", 20_000);
+
+    private final String displayName;
     private final long threshold;
 
-    EventBadge(long threshold) {
+    EventBadge(String displayName, long threshold) {
+        this.displayName = displayName;
         this.threshold = threshold;
     }
 
     public static EventBadge getBadgeForAmount(long totalBenefitAmount) {
-        EventBadge badgeEarned = 없음;
-        for (EventBadge badge : EventBadge.values()) {
-            if (totalBenefitAmount >= badge.threshold) {
-                badgeEarned = badge;
-            }
-        }
-        return badgeEarned;
+        return Arrays.stream(values())
+                .filter(badge -> totalBenefitAmount >= badge.threshold)
+                .max(Comparator.comparingLong(badge -> badge.threshold))
+                .orElse(NONE);
+    }
+
+    @Override
+    public String toString() {
+        return displayName;
     }
 }
